@@ -1,21 +1,25 @@
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from './componentes/ejemplos/Button'
 import TextComponente from './componentes/TextComponente'
 import Navbar from './componentes/Navbar'
 import ItemListConteiner from './componentes/ItemListConteiner'
+import NavbarBootstrap from './componentes/NavbarBootstrap';
+
 
 function App() {
-const saludar=()=>{
-  alert('holis')
-}
-  const despedir=()=>{
-alert('adios mierda')
-  }
+//const saludar=()=>{
+ // alert('holis')
+//}
+ // const despedir=()=>{
+//alert('adios mierda')
+ // }
 
 
   return (
     <>
-    <Navbar/>
+    {/*<Navbar/>*/}
+    <NavbarBootstrap/>
     <ItemListConteiner greeting='Benvenuti a mi app sportiva'/>
    
     </>
