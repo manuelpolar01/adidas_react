@@ -5,7 +5,7 @@ const CartWidgetReact =()=>{
     return(
         <div>
             <BsCart4  fontSize={'1.8rem'}color="red"/>
-            <Badge bg="danger">5</Badge>
+            <Badge bg="danger">5 </Badge>
         </div>
     )
 }

@@ -19,3 +19,7 @@ border-radius: 15px;
 color: black;
 font-weight: bold;
 }
+.card-img-top{
+  width: 200px;
+  height: 200px;
+}

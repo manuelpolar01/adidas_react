@@ -8,7 +8,7 @@ function NavbarBootstrap() {
   return (
     <Navbar  expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#home"></Navbar.Brand>
         <img src="./logo1.png" alt="logo"  className='primerLogo'/>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

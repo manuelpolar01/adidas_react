@@ -5,9 +5,14 @@ import TextComponente from './componentes/TextComponente'
 import Navbar from './componentes/Navbar'
 import ItemListConteiner from './componentes/ItemListConteiner'
 import NavbarBootstrap from './componentes/NavbarBootstrap';
+import ItemCount from './componentes/ItemCount';
+
+
+
 
 
 function App() {
+  console.log('App')
 //const saludar=()=>{
  // alert('holis')
 //}
@@ -19,8 +24,10 @@ function App() {
   return (
     <>
     {/*<Navbar/>*/}
+
     <NavbarBootstrap/>
     <ItemListConteiner greeting='Benvenuti a mi app sportiva'/>
+    {/*<ItemCount stock={15}/>*/}
    
     </>
   )
