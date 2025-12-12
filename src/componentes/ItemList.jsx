@@ -1,9 +1,9 @@
 import React from 'react'
 import Item from './Item'
-
+import "../css/card.css"
 const ItemList = ({products}) => {
   return (
-    <div className='d-flex justify content -arond aling-items-center flex -wrap'>
+    <div className='section-galeria'>
       {products.map((prod)=><Item key={prod.id} prod={prod}/>)}
     </div>
   )

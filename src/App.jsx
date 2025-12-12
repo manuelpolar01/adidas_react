@@ -6,6 +6,7 @@ import Navbar from './componentes/Navbar'
 import ItemListConteiner from './componentes/ItemListConteiner'
 import NavbarBootstrap from './componentes/NavbarBootstrap';
 import ItemCount from './componentes/ItemCount';
+import FecthApi from './componentes/ejemplos/FecthApi';
 
 
 
@@ -23,9 +24,9 @@ function App() {
 
   return (
     <>
-    {/*<Navbar/>*/}
-
     <NavbarBootstrap/>
+    <FecthApi/>
+    {/*<Navbar/>*/}
     <ItemListConteiner greeting='Benvenuti a mi app sportiva'/>
     {/*<ItemCount stock={15}/>*/}
    

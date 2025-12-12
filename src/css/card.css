@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card-img-top{
+background-size: cover;
+  width: 200px;
+  height: 200px;
+  padding: 15px;
+}
+/*className='d-flex justify content -arond aling-items-center flex-wrap'>*/
+/*.card {
+ display: flex;
+ justify-content:space-around ;
+ align-items: center;
+ flex-wrap: wrap;
+}*/
+h2{
+    text-align: center;
+    background-color: rgb(43, 218, 136);
+    padding: 20px;
+    color: white;
+    text-shadow: 0 0 5px black;
+}
+.section-galeria{
+
+    width: 100%;
+    display: grid;
+    background-size: cover;
+    background-position: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows:repeat(3,450px);
+
+}
+.item{
+    border: 2px solid black;
+}
+@media only screen and (min-width:480px){
+    .section-galeria{
+        grid-template-columns: repeat(3,1fr);
+    }
+}
