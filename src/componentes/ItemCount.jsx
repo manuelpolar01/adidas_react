@@ -2,26 +2,9 @@ import React,{useState,useEffect} from 'react'
 
 const ItemCount = ({stock}) => {
     const [count,setCount]=useState(1)
-    const [comprar,setComprar] =useState(false)
-    console.log('ItemCont')
-//se actualiza siempre
-useEffect(()=>{
-  console.log('me actualizo siempre')
 
-})
+  
 
-// se ejecuta una sola vez 
-useEffect(()=>{
-console.log ('me ejecuto una sola vez ')
-},[])
-
-//se ejecuta cuando  monta componte y se actualiza lo que esta escuchando
-
-useEffect(()=>{
-console.log('me actualizo solo cuando compro')
-},[comprar])
-
-    //funciones
   const sumar =()=>{
     if(count < stock)
       {
@@ -45,7 +28,7 @@ console.log('me actualizo solo cuando compro')
         <span className='btn'>{count}</span>
         <button className='btn btn-success'onClick={sumar}>+</button>
       </div>
-      <button className='btn btn-primary'onClick={comprarProductos}>agregar al carrito</button>
+      <button className='btn btn-primary'>agregar al carrito</button>
     </div>
   )
 }
