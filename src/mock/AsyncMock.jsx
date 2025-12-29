@@ -63,13 +63,13 @@ const data=[
     },
     {
         id:'07',
-        name:'nike',
+        name:'caca',
         description :'pantalon',
         size:'M',
         price:20,
         stock:12,
         category:'donne',
-        img:'https://pixabay.com/es/images/download/x-2322835_1920.jpg',
+        img:'https://pixabay.com/it/photos/ustrasana-cammello-yoga-madrid-2679482/'
     },
     {
         id:'08',

@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from 'react'
+import {useState} from 'react'
 
-const ItemCount = ({stock}) => {
+const ItemCount = ({stock, onAdd}) => {
     const [count,setCount]=useState(1)
 
   
@@ -17,8 +17,8 @@ const ItemCount = ({stock}) => {
     setCount(count - 1)
     }
 
-    const comprarProductos =()=>{
-      setComprar(!comprar)
+    const comprar =()=>{
+     onAdd(count)
     }
   
   return (
@@ -28,7 +28,7 @@ const ItemCount = ({stock}) => {
         <span className='btn'>{count}</span>
         <button className='btn btn-success'onClick={sumar}>+</button>
       </div>
-      <button className='btn btn-primary'>agregar al carrito</button>
+      <button className='btn btn-primary' onClick={comprar}>agregar al carrito</button>
     </div>
   )
 }
