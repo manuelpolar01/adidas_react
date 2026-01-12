@@ -14,7 +14,7 @@ const CartView = () => {
               <span>{compra.name}</span>
               <span>{compra.quantity}</span>
               <span>{compra.price},00</span>
-              <span>precio final{compra.price * compra.quantity},00€</span>
+              <span>precio final{compra.price * compra.quantity},00</span>
               <button className='btn btn-danger' onClick={()=>removeItem(compra.id)}>X</button>
             </div>
           ))}
