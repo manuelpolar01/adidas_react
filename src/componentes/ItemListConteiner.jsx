@@ -4,28 +4,34 @@ import ItemList from "./ItemList";
 import { useParams } from "react-router-dom";
 import ButtonExample from "./LoaderComponet";
 import LoaderComponet from "./LoaderComponet";
+import { collection, getDocs, query, where } from "firebase/firestore/lite";
+import { db } from "../service/firebase";
 
 const ItemListConteiner=({greeting})=>{
 const[products,setProducts]=useState([])
 const[loading,setLoading]=useState(false)
 const{categoryId}=useParams()
-console.log(categoryId)
+
+//FIREBASE
+
 useEffect(()=>{
 setLoading(true)
-getProducts() 
-
-    .then((res)=>{
-        if(categoryId){
-//filtrar
-      setProducts(res.filter((prod)=>prod.category===categoryId))
+//conectamos con nuestra collection    
+const productsCollection = categoryId ? query(collection(db,"productos"),where("category","==",categoryId)):collection(db,"productos")
+//perdir los documentos
+getDocs(productsCollection)
+.then((res)=>{
+    //limpiar los datos para utilizar
+    const list = res.docs.map((doc)=>{ 
+        return{ id:doc.id,
+                 ...doc.data()
         }
-            else{
-                //no filtro
-                setProducts(res)
-            }
     })
-    .catch((error)=>console.error('error'))
-    .finally(()=>setLoading(false))
+    console.log(list)
+    setProducts(list)
+})
+.catch((error)=>console.log(error))
+.finally(()=>setLoading(false))
 },[categoryId])
 
 
