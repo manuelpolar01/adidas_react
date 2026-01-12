@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getProducts } from "../mock/AsyncMock";
+import { getProducts , data } from "../mock/AsyncMock";
 import ItemList from "./ItemList";
 import { useParams } from "react-router-dom";
 import ButtonExample from "./LoaderComponet";
 import LoaderComponet from "./LoaderComponet";
-import { collection, getDocs, query, where } from "firebase/firestore/lite";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore/lite";
 import { db } from "../service/firebase";
 
 const ItemListConteiner=({greeting})=>{
@@ -33,11 +33,16 @@ getDocs(productsCollection)
 .catch((error)=>console.log(error))
 .finally(()=>setLoading(false))
 },[categoryId])
-
-
+// se hace una vez y se borra 
+//const subirData =()=>{
+//    console.log("SUBIENDO")
+//    const collectionToAdd= collection(db,"productos")
+//    data.map((item)=>addDoc(collectionToAdd, item))
+//}
  
     return(
         <>
+        {/*<button className="btn btn-dark" onClick={subirData}> subir data</button>*/}
         {loading
         ? <LoaderComponet/>
         :<div>
