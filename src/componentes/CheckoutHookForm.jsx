@@ -12,30 +12,29 @@ const {cart, cartTotal, clear}=useContext(CartContext)
 const {register,handleSubmit,formState:{errors},getValues}=useForm()
 console.log(errors)
 
-const finalizarCompra =(dataDelForm)=> {
+const finalizarCompra = (dataDelForm) => {
 
-console.log(dataDelForm)
-   
-          let orden={
-           buyer:{
-               name:dataDelForm.name,
-               address:dataDelForm.adddress,
-               email:dataDelForm.email  
-           },
-           compras:cart,
-           total:cartTotal(),
-           date: serverTimestamp()
-          }
-          const ventas = collection(db ,"orders")
-        // // agregar un nuevo doc
-        // addDoc (ventas, orden)
-        // .then((res)=>{
-        //     setOrderId(res.id)
-        //     clear()
-        // })
-        // .catch((error)=> console.log(error))
-      // }
+  console.log("SUBMIT OK", dataDelForm)
+
+  const orden = {
+    buyer: {
+      name: dataDelForm.name,
+      address: dataDelForm.address,
+      email: dataDelForm.email
+    },
+    compras: cart,
+    total: cartTotal(),
+    date: serverTimestamp()
   }
+  const ventas = collection(db, "orders")
+
+  addDoc(ventas, orden)
+    .then((res) => {
+      setOrderId(res.id)
+      clear()
+    })
+    .catch((error) => console.log(error))
+}
   return (
   <div>
 {
@@ -52,10 +51,10 @@ console.log(dataDelForm)
             {errors?.name?.type === 'required'&& <span style={{color:'red'}}>por favor complete el campo del nombre</span>}
             {errors?.name?.type === 'minLength'&& <span style={{color:'red'}}>el nombre debe tener minimo 5 caracteres</span>}
             
-            <input className ='form-control' type="text" name='address' placeholder='ingrese su direccion'{...register("address",{required:true,minLength:5,maxLength:10})} />
+            <input className ='form-control' type="text" name='address' placeholder='ingrese su direccion'{...register("address",{required:true,minLength:5,maxLength:25})} />
             {errors?.address?.type === 'required'&& <span style={{color:'red'}}>por favor complete el campo de la direccion</span>}
             {errors?.address?.type === 'minLength' && <span style={{color:'red'}}>la direccion debe tener minimo de 5 caracteres</span>}
-            {errors?.address?.type === 'maxLength' && <span style={{color:'red'}}>la direccion  tener maximo de 10 caracteres</span>}
+            {errors?.address?.type === 'maxLength' && <span style={{color:'red'}}>la direccion  tener un maximo de 25 caracteres</span>}
             
             <input className ='form-control' type="email" name='email' placeholder='imgrese de su correo' {...register("email",{required:true})} />
             {errors?.email?.type === 'required'&& <span style={{color:'red'}}>por favor complete el campo del correo  </span>}

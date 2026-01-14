@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
 const Item = ({prod}) => {
     const {name,description,img, price,id}=prod
   return (

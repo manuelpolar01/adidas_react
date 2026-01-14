@@ -6,3 +6,22 @@
 .primerLogo{
     width:2rem;
 }
+.navbar {
+  padding: 1rem;
+}
+
+.navbar-brand {
+  font-size: 1.4rem;
+}
+
+/* MOBILE */
+@media (max-width: 767px) {
+  .navbar-nav {
+    text-align: center;
+  }
+
+  .nav-link {
+    padding: 0.75rem 0;
+    font-size: 1.1rem;
+  }
+}
