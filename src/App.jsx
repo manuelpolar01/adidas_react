@@ -8,6 +8,8 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import { CartProvider } from './context/CartContext';
 import Cart from './componentes/Cart';
 import Checkout from './componentes/Checkout';
+import CheckoutHookForm from './componentes/CheckoutHookForm';
+
 
 
 
@@ -25,7 +27,7 @@ function App() {
                 <Route path='/category/:categoryId' element={<ItemListConteiner greeting='categoria: '/>}/>
                 <Route path='/item/:itemId' element={<ItemDetailConteiner/>}/>
                 <Route path='/cart' element={<Cart/>}/>
-                <Route path='/checkout' element={<Checkout/>}/>
+                <Route path='/checkout' element={<CheckoutHookForm/>}/>
         </Routes>
     </CartProvider>
     </BrowserRouter>

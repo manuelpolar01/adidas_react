@@ -8,7 +8,7 @@ const CartWidgetReact =()=>{
     
     return(
         <div>
-            <Badge bg="danger">{cartQuantity()}</Badge>
+            {cartQuantity()>0 && <Badge bg="danger">{cartQuantity()}</Badge>}
             <BsCart4  fontSize={'1.8rem'}/>
         </div>
     )
