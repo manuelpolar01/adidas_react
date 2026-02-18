@@ -10,6 +10,7 @@ const ItemCount = ({stock, onAdd}) => {
       {
     setCount(count + 1)
      }
+     console.logo(sumar)
     }
 
   const restar =()=>{

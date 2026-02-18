@@ -9,7 +9,7 @@ const Item = ({prod}) => {
       <div className='card-body'></div>
       <h5 className='card-title'>{name}</h5>
       <p className='card-text'>€{price},00</p>
-      <Link className='btn btn-dark' to={`/item/${id}`}>ver mas</Link>
+      <Link className='btn btn-dark'to={`/item/${id}`}>ver mas</Link>
     </div>
   )
 }
