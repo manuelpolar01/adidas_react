@@ -12,6 +12,14 @@ const[products,setProducts]=useState([])
 const[loading,setLoading]=useState(false)
 const{categoryId}=useParams()
 
+//useEffect(() => {
+//  
+//    getProducts(categoryId)
+//      .then((res) => setProducts(res))
+//      .catch((err) => console.log(err))
+//      .finally(() => setLoading(false));
+//  }, [categoryId]);
+
 //FIREBASE
 
 useEffect(()=>{
@@ -33,11 +41,12 @@ getDocs(productsCollection)
 .catch((error)=>console.log(error))
 .finally(()=>setLoading(false))
 },[categoryId])
-// se hace una vez y se borra 
+
+ //se hace una vez y se borra 
 //const subirData =()=>{
-//    console.log("SUBIENDO")
-//    const collectionToAdd= collection(db,"productos")
-//    data.map((item)=>addDoc(collectionToAdd, item))
+//console.log("SUBIENDO")
+//const collectionToAdd= collection(db,"productos")
+//data.map((item)=>addDoc(collectionToAdd, item))
 //}
  
     return(
@@ -45,8 +54,8 @@ getDocs(productsCollection)
         {/*<button className="btn btn-dark" onClick={subirData}> subir data</button>*/}
         {loading
         ? <LoaderComponet/>
-        :<div>
-            <h1 className="text-success">{greeting}{categoryId && <span>{categoryId}</span>}</h1>
+        :<div className="main">
+            <h1 className="text-white">{greeting}{categoryId && <span>{categoryId}</span>}</h1>
             <ItemList products={products}/>
          </div>}
         </>
