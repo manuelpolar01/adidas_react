@@ -1,94 +1,68 @@
-const functions = require('firebase-functions');
-const { Resend } = require('resend');
-
-// Inicializar Resend con la API key (la configuraremos después)
-const resend = new Resend(functions.config().resend.key);
-
-// Función que se ejecuta cuando se crea un nuevo documento en 'forms'
-exports.notifyNewForm = functions.firestore
-  .document('forms/{formId}')
+exports.notifyNewOrder = functions.firestore
+  .document('orders/{orderId}')
   .onCreate(async (snap, context) => {
-    const formData = snap.data();
-    const formId = context.params.formId;
-    
-    // Evitar notificaciones duplicadas si el documento se actualiza
-    if (formData.notified === true) {
-      console.log('Formulario ya notificado, saltando...');
-      return null;
-    }
+    const order = snap.data();
+    const orderId = context.params.orderId;
+
+    if (order.notified === true) return null;
 
     try {
-      // Enviar email
       await resend.emails.send({
-        from: 'Formularios <onboarding@resend.dev>', // Dominio gratuito de Resend
-        to: ['tu-email@gmail.com'], // ← CAMBIA ESTO POR TU EMAIL
-        subject: `📩 Nuevo mensaje de ${formData.name || 'Cliente'}`,
+        from: 'Tienda <onboarding@resend.dev>',
+        to: ['paragiliar1@hotmail.com'], // ← tu email de admin
+        subject: `🛒 Nueva orden #${orderId}`,
         html: `
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background: #4F46E5; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-              .content { background: #f9fafb; padding: 20px; border-radius: 0 0 8px 8px; }
-              .field { margin-bottom: 15px; }
-              .label { font-weight: bold; color: #6B7280; font-size: 12px; text-transform: uppercase; }
-              .value { font-size: 16px; margin-top: 5px; }
-              .footer { margin-top: 20px; font-size: 12px; color: #9CA3AF; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h2>🚀 Nuevo Formulario Recibido</h2>
-              </div>
-              <div class="content">
-                <div class="field">
-                  <div class="label">Nombre</div>
-                  <div class="value">${formData.name || 'No especificado'}</div>
-                </div>
-                <div class="field">
-                  <div class="label">Email</div>
-                  <div class="value">${formData.email || 'No especificado'}</div>
-                </div>
-                <div class="field">
-                  <div class="label">Mensaje</div>
-                  <div class="value">${formData.message || 'Sin mensaje'}</div>
-                </div>
-                <div class="field">
-                  <div class="label">Fecha</div>
-                  <div class="value">${new Date().toLocaleString('es-ES')}</div>
-                </div>
-                <div class="field">
-                  <div class="label">ID del formulario</div>
-                  <div class="value" style="font-family: monospace; font-size: 12px;">${formId}</div>
-                </div>
-              </div>
-              <div class="footer">
-                <p>Este mensaje fue enviado automáticamente desde tu aplicación.</p>
-              </div>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: #111; color: white; padding: 20px; border-radius: 8px 8px 0 0;">
+              <h2>🛒 Nueva Orden Recibida</h2>
             </div>
-          </body>
-          </html>
+            <div style="background: #f9fafb; padding: 20px; border-radius: 0 0 8px 8px;">
+              
+              <h3>👤 Datos del comprador</h3>
+              <p><strong>Nombre:</strong> ${order.buyer.name}</p>
+              <p><strong>Email:</strong> ${order.buyer.email}</p>
+              <p><strong>Dirección:</strong> ${order.buyer.address}</p>
+
+              <h3>🛍️ Productos</h3>
+              <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                  <tr style="background: #e5e7eb;">
+                    <th style="padding: 8px; text-align:left;">Producto</th>
+                    <th style="padding: 8px; text-align:left;">Talla</th>
+                    <th style="padding: 8px; text-align:left;">Cantidad</th>
+                    <th style="padding: 8px; text-align:left;">Precio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${order.compras.map(p => `
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                      <td style="padding: 8px;">${p.name}</td>
+                      <td style="padding: 8px;">${p.size || '-'}</td>
+                      <td style="padding: 8px;">${p.quantity}</td>
+                      <td style="padding: 8px;">€${p.price}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+
+              <p style="font-size: 18px; font-weight: bold; text-align: right; margin-top: 10px;">
+                Total: €${order.total}
+              </p>
+
+              <p style="color: #9CA3AF; font-size: 12px;">ID de orden: ${orderId}</p>
+            </div>
+          </div>
         `,
-        text: `Nuevo formulario de ${formData.name}\nEmail: ${formData.email}\nMensaje: ${formData.message}`
+        text: `Nueva orden de ${order.buyer.name} | Email: ${order.buyer.email} | Total: €${order.total}`
       });
 
-      // Marcar como notificado para evitar duplicados
       await snap.ref.update({ notified: true, notifiedAt: new Date() });
-      
-      console.log('✅ Email enviado correctamente para formulario:', formId);
+      console.log('✅ Email de admin enviado para orden:', orderId);
       return { success: true };
-      
+
     } catch (error) {
-      console.error('❌ Error enviando email:', error);
-      // Guardar el error para debug
-      await snap.ref.update({ 
-        notificationError: error.message,
-        notificationAttemptedAt: new Date() 
-      });
-      throw new functions.https.HttpsError('internal', 'Error enviando notificación');
+      console.error('❌ Error:', error);
+      await snap.ref.update({ notificationError: error.message });
+      throw new functions.https.HttpsError('internal', 'Error enviando email');
     }
   });
